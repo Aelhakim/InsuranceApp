@@ -39,12 +39,20 @@ public class InsuranceScore {
 		int choice;
 		Scanner sc = new Scanner(System.in);
 		showCard();
+		System.out.println("Enter the name of the file: ");
+		fname = sc.nextLine();
+		ArrayList<ScoreCard> clients = InsuranceReader.readInfoFromTextFile(fname);
+		if (clients == null) {
+			System.out.println("No members were found");
+		}
 		do {
 			showMenu();
             System.out.println("Enter your choice: ");
             choice = sc.nextInt();
             if (choice == 1) {
-            	
+		    System.out.println("");
+                    System.out.println("Here is a list of all the members\n");
+                    InsuranceReader.writeInfoToScreen(clients);
             } else if (choice == 2) {
             	
             } else if (choice == 3) {
