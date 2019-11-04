@@ -37,6 +37,7 @@ public class InsuranceScore {
 		}
 	public static void main(String []args) {
 		int choice;
+		String fname;
 		Scanner sc = new Scanner(System.in);
 		showCard();
 		System.out.println("Enter the name of the file: ");
