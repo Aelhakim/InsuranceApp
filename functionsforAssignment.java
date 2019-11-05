@@ -1,6 +1,15 @@
     /**
  * @AntonioElhakim
  */
+    public static final int UNKNOWN = 0;
+    public static final int NORMAL = 1;
+    public static final int OVERWEIGHT = 2;
+    public static final int OBESITY = 3;
+    
+    public static final int ELEVATED = 4;
+    public static final int STAGE1 = 5;
+    public static final int STAGE2 = 6;
+    public static final int CRISIS = 7;
 public class Assessor {
 
  //calc risk 
