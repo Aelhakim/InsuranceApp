@@ -1,8 +1,8 @@
 /**
- * @AntonioElhakim
+ * 
  */
 import java.io.Serializable;
-import java.util.Scanner;
+import java.util.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
