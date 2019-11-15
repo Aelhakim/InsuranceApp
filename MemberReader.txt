@@ -1,0 +1,125 @@
+/**
+ * @DanLaskero
+ */
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.Scanner;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
+
+public class MemberReader {
+
+    
+   //   load data from file  
+     
+    public static ArrayList<Member> load(Scanner scan) {
+        System.out.print("(T)ext, (B)inary, or (X)ML? ");
+        String type = scan.next();
+        System.out.print("Enter name of input file: ");
+        String fileName = scan.next();
+        ArrayList<Member> dl = null;
+        try {
+            switch (type) {
+                case "T":
+                    dl = readTabFile(fileName);
+                    System.out.println(dl.size() + " members were read.");
+                    break;
+                case "B":
+                    dl = readBinaryFile(fileName);
+                    System.out.println(dl.size() + " members were read.");
+                    break;
+                case "X":
+                    dl = readXMLFile(fileName);
+                    System.out.println(dl.size() + " members were read.");
+                    break;
+                default:
+                    break;
+            }
+        } catch (IOException | ClassNotFoundException | JAXBException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return dl;
+    }
+
+    
+     // load data from xml file  
+     
+    public static ArrayList<Member> readXMLFile(String fileName) throws JAXBException {
+        File file = new File(fileName);
+        JAXBContext jaxbContext = JAXBContext.newInstance(Members.class);
+
+        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        Members members = (Members) jaxbUnmarshaller.unmarshal(file);        
+        return (ArrayList<Member>) members.members;
+    }
+
+    
+     // load data from binary file  
+     
+    public static ArrayList<Member> readBinaryFile(String fileName)
+            throws FileNotFoundException, IOException, ClassNotFoundException {
+        FileInputStream fileinput = new FileInputStream(new File(fileName));
+        ObjectInputStream object = new ObjectInputStream(fileinput);
+        Members member = (Members) object.readObject();   // read the whole object
+        object.close();
+        fileinput.close();
+        return (ArrayList<Member>) member.getMembers();
+    }
+
+    
+     // load data from tabbing file 
+     // scans the data of the file
+    public static ArrayList<Member> readTabFile(String fileName) {
+        ArrayList<Member> dl = new ArrayList<>();
+        try {
+            Scanner scanner = new Scanner(new File(fileName));
+            String firstname;
+            String lastname;
+            int age;
+            int ht;
+            int wt;
+            int bpSyst;
+            int bpDias;
+            String cancer;
+            String diabetes;
+            String alzheimers;
+            while (scanner.hasNext()) {
+                Member member = new Member();
+                firstname = scanner.next();
+                lastname = scanner.next();
+                age = scanner.nextInt();
+                ht = scanner.nextInt();
+                wt = scanner.nextInt();
+                bpSyst = scanner.nextInt();
+                bpDias = scanner.nextInt();
+                cancer = scanner.next();
+                diabetes = scanner.next();
+                alzheimers = scanner.next();
+                
+                member.setAge(age);
+                member.setAlzheimers(alzheimers);
+                member.setBpDias(bpDias);
+                member.setBpSyst(bpSyst);
+                member.setCancer(cancer);
+                member.setDiabetes(diabetes);
+                member.setFname(firstname);
+                member.setHeight(ht);
+                member.setLname(lastname);
+                member.setWeight(wt);        
+                
+                dl.add(member);
+            }
+            scanner.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return dl;
+    }
+}
