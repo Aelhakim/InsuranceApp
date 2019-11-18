@@ -25,7 +25,7 @@ public class MemberReader {
         String fileName = scan.next();
         ArrayList<Member> dl = null;
         try {
-            switch (type) {
+            switch (type.toUpperCase()) {
                 case "T":
                     dl = readTabFile(fileName);
                     System.out.println(dl.size() + " members were read.");
