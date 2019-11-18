@@ -1,5 +1,10 @@
 /**
- * @AntonioElhakim 
+ * The Calculator is the main application.
+ * 
+ * @author Monique Cauty
+ * @author Antonio Elhakim
+ * @author Dan Laskero
+ * @author John Vercimak
  */
 import java.util.ArrayList;
 
@@ -13,7 +18,7 @@ public class Calculator {
 		ArrayList<Member> al = readFile(sc);   
 		ArrayList<InsuranceScore> ises = new ArrayList<>();
 		int selection;
-		do {        // get selection
+		do {        
 			selection = getUserSelection(sc);
 
 			switch (selection) {
@@ -37,7 +42,9 @@ public class Calculator {
 				break;
 			case 6:
 				assessMember(al, ises);
-				toJsonFile(ises, sc);
+				System.out.print("Enter name of JSON file: ");
+				String fileName = sc.next();
+				InsuranceScoreWriter.toJsonFile(ises, fileName);
 				break;
 			}
 			System.out.println("");
@@ -47,9 +54,12 @@ public class Calculator {
 
 	/**********************************************************/
 
-	//exit message 
+	/**
+	 * This function handles printing the departure message.
+	 */
 	private static void showFinalMessage() {
-		System.out.println("****************************************\n"
+		System.out.println(""
+				+ "****************************************\n"
 				+ "         INSURANCE SCORE CARD\n"
 				+ "               THANK YOU\n"
 				+ "****************************************");
@@ -57,20 +67,16 @@ public class Calculator {
 
 	/**********************************************************/
 
-	// ask user for the name of json file 
-	private static void toJsonFile(ArrayList<InsuranceScore> ises,Scanner sc) {
-		System.out.print("Enter name of JSON file: ");
-		String fileName = sc.next();
-		InsuranceScoreWriter.toJsonFile(ises, fileName);
-	}
-
-	/**********************************************************/
-
-	// calculate insurance score 
+	/**
+	 * This function calculates assesses members
+	 * 
+	 * @param al
+	 * @param ises
+	 */
 	private static void assessMember(ArrayList<Member> al,
 			ArrayList<InsuranceScore> ises) {
 		ises.clear();
-		System.out.println("Here are the insurance assessments:");
+		System.out.println("\nHere are the insurance assessments:");
 		for (Member m : al) {
 			InsuranceScore is = new InsuranceScore();
 			is.setFname(m.getFname());
@@ -83,7 +89,10 @@ public class Calculator {
 
 	/**********************************************************/
 
-	//Print all members
+	/** 
+	 * This function lists/prints all the members.
+	 * @param al
+	 */
 	private static void listMember(ArrayList<Member> al) {
 		if (al != null) {
 			for (Member member : al) {
@@ -94,9 +103,16 @@ public class Calculator {
 
 	/**********************************************************/
 
-	//get user selection
+	/**
+	 * This function handles listing the menu options and
+	 * getting the user's selection.
+	 * 
+	 * @param sc
+	 * @return
+	 */
 	private static int getUserSelection(Scanner sc) {
-		System.out.print("Here are your choices:\n"
+		System.out.print("\n"
+				+ "Here are your choices:\n"
 				+ "        1. List members\n"
 				+ "        2. Add a new member\n"
 				+ "        3. Save members\n"
@@ -110,7 +126,11 @@ public class Calculator {
 
 	/**********************************************************/
 
-	//file reader
+	/** This function handles reading the initial file
+	 * 
+	 * @param sc
+	 * @return al
+	 */
 	private static ArrayList<Member> readFile(Scanner sc) {
 		System.out.print("Enter name of member file: ");
 		String fileName = sc.next();
@@ -121,9 +141,12 @@ public class Calculator {
 
 	/**********************************************************/
 
-	//welcome message
+	/**
+	 * This function handles printing the welcome message
+	 */
 	private static void showWelcomeMessage() {
-		System.out.println("****************************************\n"
+		System.out.println(""
+				+ "****************************************\n"
 				+ "         INSURANCE SCORE CARD\n"
 				+ "  This app scores a potential customer\n"
 				+ "  on various health attributes: blood\n"
